@@ -23,10 +23,7 @@ public class LocationTest {
         Location second = null;
         first.getDistance(first, second);
     }
-
-    /**
-     *
-     */
+    
     @Test(expected = NullPointerException.class)
     public void locationIsNullShouldThrowException2() {
         Location first = null;
