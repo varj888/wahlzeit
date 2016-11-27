@@ -3,19 +3,18 @@ package org.wahlzeit.model;
 /**
  * Coordinate.java
  *
- * v.1.1
+ * v.1.2
  *
- * 30.10.16.
+ * Created on 30.10.16.
  */
 
 public interface Coordinate {
 
-    public double getX();
+    double EARTH_RADIUS_KM = 6371.0;
 
-    public double getY();
+    double getDistance(Coordinate secondCoordinate);
 
-    public double getZ();
+    boolean isEqual(Coordinate c);
 
-    public double getDistance(Coordinate secondCoordinate);
-
+    boolean isCartesian();
 }
