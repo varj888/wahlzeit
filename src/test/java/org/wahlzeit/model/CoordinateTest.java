@@ -19,17 +19,17 @@ public class CoordinateTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void latitudeValueNotInRange(){
-        Coordinate coord = new SphericCoordinate(91.1, 181.2);
+        Coordinate coord = new SphericCoordinate(91.1, 181.2, 22222);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void longitudeValueNotInRange(){
-        Coordinate coord = new SphericCoordinate(91.1, 181.2);
+        Coordinate coord = new SphericCoordinate(91.1, 181.2, 22222);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void createSphericCoordinateWrongValuesTest() {
-        SphericCoordinate sc = new SphericCoordinate(123, 222);
+        SphericCoordinate sc = new SphericCoordinate(123, 222, 11111);
     }
 
     @Test
@@ -43,29 +43,38 @@ public class CoordinateTest {
 
     @Test
     public void getDistanceSphericTest(){
-        SphericCoordinate sc1 = new SphericCoordinate(34.55, 43.90);
-        SphericCoordinate sc2 = new SphericCoordinate(28.15, 88.23);
+        SphericCoordinate sc1 = new SphericCoordinate(34.55, 43.90, 100);
+        SphericCoordinate sc2 = new SphericCoordinate(28.15, 88.23, 100);
         double actualRes = sc1.getDistance(sc2);
-        double expectedRes = 4235;
+        double expectedRes = 82;
         assertEquals(expectedRes, actualRes, delta);
     }
 
     @Test
     public void getDistanceSphericToCartesianTest(){
-        SphericCoordinate sc = new SphericCoordinate(22, 33);
+        SphericCoordinate sc = new SphericCoordinate(22, 33, 100);
         CartesianCoordinate ccExpected = new CartesianCoordinate(-299.7801015013779, 6299.8157297895266, 895.3927238766871);
-        assertEquals(sc.getDistance(ccExpected), 7129, delta);
+        assertEquals(sc.getDistance(ccExpected), 951, delta);
     }
 
     @Test
     public void getDistanceBothCoordinatesTest(){
-        CartesianCoordinate cc = new CartesianCoordinate(-299.7801015013779, 6299.8157297895266, 895.3927238766871);
-        SphericCoordinate scExpected = new SphericCoordinate(81.919753795836, 92.724395199765);
-        SphericCoordinate sc = cc.toSphericCoordinate();
-        assertEquals(scExpected.getLatitude(), sc.getLatitude(), delta);
-        assertEquals(scExpected.getLongitude(), sc.getLongitude(), delta);
-        double dist1 = cc.getDistance(sc);
-        double dist2 = sc.getDistance(cc);
+        CartesianCoordinate cc = new CartesianCoordinate(199.7801015013779, 6299.8157297895266, 895.3927238766871);
+        SphericCoordinate scExpected = new SphericCoordinate(1.4296819575887, 1.5390948960652, 6366.2640887911);
+        CartesianCoordinate cc1 = scExpected.toCarthesian();
+        assertEquals(cc.getX(), cc1.getX(), delta);
+        assertEquals(cc.getY(), cc1.getY(), delta);
+        assertEquals(cc.getZ(), cc1.getZ(), delta);
+        assertEquals(scExpected.getX(), cc1.getX(), delta);
+        assertEquals(scExpected.getY(), cc1.getY(), delta);
+        assertEquals(scExpected.getZ(), cc1.getZ(), delta);
+        double dist1 = cc.getDistance(cc1);
+        double dist2 = cc1.getDistance(cc);
         assertEquals(dist1, dist2, delta);
+    }
+
+    @Test
+    public void assertTest(){
+
     }
 }

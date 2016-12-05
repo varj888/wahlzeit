@@ -1,7 +1,9 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.services.mailing.MailingException;
+
 /**
- * v.1.1
+ * v.1.2
  *
  * Created on 19.11.16.
  */
@@ -10,6 +12,11 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     private double latitude;
     private double longitude;
+    private double radius;
+
+    private double x;
+    private double y;
+    private double z;
 
     /**
      *
@@ -62,8 +69,10 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public void setLatitude(double latitude) {
+        assert assertValidInput(latitude);
         checkLatitude(latitude);
         this.latitude = latitude;
+        assertClassInvariants();
     }
 
     /**
@@ -73,8 +82,48 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public void setLongitude(double longitude) {
+        assert assertValidInput(longitude);
         checkLongitude(longitude);
         this.longitude = longitude;
+        assertClassInvariants();
+    }
+
+    /**
+     *
+     * @methodtype query method
+     * (getter)
+     */
+
+    public double getX() {
+        x = radius * (Math.sin((Math.toRadians(longitude))))
+                * (Math.cos(Math.toRadians(latitude)));
+        assert assertValidInput(x);
+        return x;
+    }
+
+    /**
+     *
+     * @methodtype query method
+     * (getter)
+     */
+
+    public double getY() {
+        y = radius * (Math.sin((Math.toRadians(longitude))))
+                * (Math.sin(Math.toRadians(latitude)));
+        assert assertValidInput(y);
+        return y;
+    }
+
+    /**
+     *
+     * @methodtype query method
+     * (getter)
+     */
+
+    public double getZ() {
+        z = radius * (Math.cos((Math.toRadians(longitude))));
+        assert assertValidInput(z);
+        return z;
     }
 
     /**
@@ -82,42 +131,33 @@ public class SphericCoordinate extends AbstractCoordinate {
      * @methodtype constructor
      */
 
-    public SphericCoordinate(double latitude, double longitude) {
+    public SphericCoordinate(double latitude, double longitude, double radius) {
         setLatitude(latitude);
         setLongitude(longitude);
+        assert isValidRadius(radius);
+        this.radius = radius;
+        assertClassInvariants();
     }
 
     /**
      *
-     * @methodtype query method
+     * @methodtype conversion method
      */
 
-    public double getDistance(Coordinate c) {
-        double distance = 0;
-        if (this.isEqual(c)){
-            distance = this.doGetDistance((SphericCoordinate)c);
+    public CartesianCoordinate toCarthesian(){
+        double x = getX();
+        double y = getY();
+        double z = getZ();
+
+        return new CartesianCoordinate(x, y, z);
+    }
+
+    protected boolean isValidRadius(double radius){
+        assert assertValidInput(radius);
+        if(radius > 0){
+            return true;
         }else {
-            SphericCoordinate sc = ((CartesianCoordinate)c).toSphericCoordinate();
-            distance = this.doGetDistance(sc);
+            return false;
         }
-        return distance;
-    }
-
-    /**
-     *
-     * @methodtype helper method
-     */
-
-    public double doGetDistance(SphericCoordinate c){
-        double distance = 0;
-        double fi1 = Math.toRadians(this.latitude);
-        double fi2 = Math.toRadians(c.latitude);
-        double deltaFi = Math.toRadians(c.getLatitude() - this.latitude);
-        double deltaLambda = Math.toRadians(c.getLongitude() - this.longitude);
-        double a = Math.pow(Math.sin(deltaFi/2), 2) + Math.cos(fi1) * Math.cos(fi2) *
-                Math.pow(Math.sin(deltaLambda/2), 2);
-        double b = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        distance = EARTH_RADIUS_KM * b;
-        return distance;
     }
 }

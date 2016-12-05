@@ -3,18 +3,16 @@ package org.wahlzeit.model;
 /**
  * Coordinate.java
  *
- * v.1.2
+ * v.1.3
  *
  * Created on 30.10.16.
  */
 
 public interface Coordinate {
 
-    double EARTH_RADIUS_KM = 6371.0;
-
     double getDistance(Coordinate secondCoordinate);
 
     boolean isEqual(Coordinate c);
 
-    boolean isCartesian();
+    CartesianCoordinate toCarthesian();
 }
