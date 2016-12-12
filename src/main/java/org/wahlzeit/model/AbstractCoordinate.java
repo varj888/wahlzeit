@@ -33,10 +33,8 @@ public abstract class AbstractCoordinate implements Coordinate {
         }
 
         protected void assertIsValidInput(double d){
-            if(!(Double.isInfinite(d) || Double.isNaN(d))){
-                if(d >= Double.MAX_VALUE){
+            if((Double.isInfinite(d) || Double.isNaN(d) || (d >= Double.MAX_VALUE))){
                     throw new IllegalArgumentException("Invalid input for the value " + d);
-                }
             }
         }
 
