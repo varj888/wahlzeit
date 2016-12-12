@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 /**
  * v.1.2
  *
@@ -8,10 +10,12 @@ package org.wahlzeit.model;
 public abstract class AbstractCoordinate implements Coordinate {
 
         public boolean isEqual(Coordinate c){
+            assertIsValidCoordinate(c);
             return Math.abs(this.getDistance(c)) == 0;
         }
 
         public double getDistance(Coordinate c){
+            assertIsValidCoordinate(c);
             double distance = 0;
             assertClassInvariants();
             CartesianCoordinate c1 = toCarthesian();
@@ -28,37 +32,28 @@ public abstract class AbstractCoordinate implements Coordinate {
             return distance;
         }
 
-        protected static boolean assertValidInput(double d){
+        protected void assertIsValidInput(double d){
             if(!(Double.isInfinite(d) || Double.isNaN(d))){
-                if(d <= Double.MAX_VALUE){
-                    return true;
+                if(d >= Double.MAX_VALUE){
+                    throw new IllegalArgumentException("Invalid input for the value " + d);
                 }
             }
-            return false;
-//            boolean b;
-//            double input;
-//            String inputString = String.valueOf(d);
-//            try {
-//                input = Double.parseDouble(inputString);
-//            }catch (Exception ex){
-//                ex.getMessage();
-//            }
-//            b = true;
-//            return b;
-
         }
 
-        protected boolean isValidCoordinate(Coordinate c){
+        protected void assertIsNotNullCoordinate(Coordinate c){
+            if(c == null)
+                throw new IllegalArgumentException("Coordinate can't be null");
+        }
+
+        protected void assertIsValidCoordinate(Coordinate c){
+            assertIsNotNullCoordinate(c);
             CartesianCoordinate cc = c.toCarthesian();
-            if((assertValidInput(cc.getX())) && (assertValidInput(cc.getY()))
-                    && (assertValidInput(cc.getZ()))){
-                return true;
-            }else {
-                return false;
-            }
+            assertIsValidInput(cc.getX());
+            assertIsValidInput(cc.getY());
+            assertIsValidInput(cc.getZ());
         }
 
         protected void assertClassInvariants(){
-            assert isValidCoordinate(this);
+            assertIsValidCoordinate(this);
         }
 }

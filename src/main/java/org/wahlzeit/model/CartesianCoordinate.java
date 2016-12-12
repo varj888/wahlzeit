@@ -44,9 +44,9 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
 
     public CartesianCoordinate(double x, double y, double z) {
-        assertValidInput(x);
-        assertValidInput(y);
-        assertValidInput(z);
+        assertIsValidInput(x);
+        assertIsValidInput(y);
+        assertIsValidInput(z);
         this.x = x;
         this.y = y;
         this.z = z;
@@ -59,7 +59,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
 
     public CartesianCoordinate toCarthesian(){
-        assertClassInvariants();
         return this;
     }
 }

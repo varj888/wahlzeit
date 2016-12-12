@@ -72,9 +72,4 @@ public class CoordinateTest {
         double dist2 = cc1.getDistance(cc);
         assertEquals(dist1, dist2, delta);
     }
-
-    @Test
-    public void assertTest(){
-
-    }
 }

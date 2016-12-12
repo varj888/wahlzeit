@@ -13,6 +13,7 @@ import org.wahlzeit.model.PhotoCase;
 import org.wahlzeit.model.Tag;
 import org.wahlzeit.model.User;
 import org.wahlzeit.model.persistence.DatastoreAdapter.ImageWrapper;
+import org.wahlzeit.model.*;
 
 /**
  * A badly named class, to be renamed to ObjectifyService first, something better later.
@@ -35,6 +36,7 @@ public class OfyService {
 		factory().register(Guest.class);
 		factory().register(PhotoCase.class);
 		factory().register(ImageWrapper.class);
+		factory().register(ArtPhoto.class);
 	}
 
 	public static Objectify ofy() {

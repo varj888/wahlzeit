@@ -63,6 +63,7 @@ public class ArtPhoto extends Photo implements Serializable {
      */
 
     public void setArtPhotoCategory(ArtPhotoCategory setCategory){
+        assertIsValidArtPhotoCategory(setCategory);
         this.artPhotoCategory = setCategory;
     }
 
@@ -74,5 +75,11 @@ public class ArtPhoto extends Photo implements Serializable {
 
     public ArtPhotoManager getArtPhotoManager(){
         return ArtPhotoManager.getInstance();
+    }
+
+    protected void assertIsValidArtPhotoCategory(ArtPhotoCategory category){
+        if(category == null){
+            throw new IllegalArgumentException("ArtPhotoCategory can't be null");
+        }
     }
 }

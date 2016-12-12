@@ -69,7 +69,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public void setLatitude(double latitude) {
-        assert assertValidInput(latitude);
+        assertIsValidInput(latitude);
         checkLatitude(latitude);
         this.latitude = latitude;
         assertClassInvariants();
@@ -82,7 +82,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public void setLongitude(double longitude) {
-        assert assertValidInput(longitude);
+        assertIsValidInput(longitude);
         checkLongitude(longitude);
         this.longitude = longitude;
         assertClassInvariants();
@@ -97,7 +97,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     public double getX() {
         x = radius * (Math.sin((Math.toRadians(longitude))))
                 * (Math.cos(Math.toRadians(latitude)));
-        assert assertValidInput(x);
+        assertIsValidInput(x);
         return x;
     }
 
@@ -110,7 +110,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     public double getY() {
         y = radius * (Math.sin((Math.toRadians(longitude))))
                 * (Math.sin(Math.toRadians(latitude)));
-        assert assertValidInput(y);
+        assertIsValidInput(y);
         return y;
     }
 
@@ -122,7 +122,7 @@ public class SphericCoordinate extends AbstractCoordinate {
 
     public double getZ() {
         z = radius * (Math.cos((Math.toRadians(longitude))));
-        assert assertValidInput(z);
+        assertIsValidInput(z);
         return z;
     }
 
@@ -134,7 +134,7 @@ public class SphericCoordinate extends AbstractCoordinate {
     public SphericCoordinate(double latitude, double longitude, double radius) {
         setLatitude(latitude);
         setLongitude(longitude);
-        assert isValidRadius(radius);
+        assertIsValidRadius(radius);
         this.radius = radius;
         assertClassInvariants();
     }
@@ -152,12 +152,9 @@ public class SphericCoordinate extends AbstractCoordinate {
         return new CartesianCoordinate(x, y, z);
     }
 
-    protected boolean isValidRadius(double radius){
-        assert assertValidInput(radius);
-        if(radius > 0){
-            return true;
-        }else {
-            return false;
-        }
+    protected void assertIsValidRadius(double radius){
+        assertIsValidInput(radius);
+        if(radius < 0)
+            throw new IllegalArgumentException("Radius can't be negative");
     }
 }
