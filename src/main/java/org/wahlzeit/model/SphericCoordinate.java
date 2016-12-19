@@ -1,4 +1,5 @@
 package org.wahlzeit.model;
+import java.util.HashMap;
 
 import org.wahlzeit.services.mailing.MailingException;
 
@@ -10,13 +11,29 @@ import org.wahlzeit.services.mailing.MailingException;
 
 public class SphericCoordinate extends AbstractCoordinate {
 
-    private double latitude;
-    private double longitude;
-    private double radius;
+    private final double latitude;
+    private final double longitude;
+    private final double radius;
 
-    private double x;
-    private double y;
-    private double z;
+    private static HashMap<Coordinate, Coordinate> instances = new HashMap<>();
+
+    /**
+     * @methodtype query method
+     * (getter)
+     */
+
+    public static SphericCoordinate getInstance(double latitude, double longitude, double radius){
+        SphericCoordinate coordinate = new SphericCoordinate(latitude, longitude, radius);
+        SphericCoordinate coordinateInMap;
+        synchronized (instances){
+            coordinateInMap = (SphericCoordinate)instances.get(coordinate);
+            if(coordinateInMap == null){
+                coordinateInMap = coordinate;
+                instances.put(coordinateInMap, coordinateInMap);
+            }
+        }
+        return coordinateInMap;
+    }
 
     /**
      *
@@ -65,37 +82,11 @@ public class SphericCoordinate extends AbstractCoordinate {
     /**
      *
      * @methodtype query method
-     * (setter)
-     */
-
-    public void setLatitude(double latitude) {
-        assertIsValidInput(latitude);
-        checkLatitude(latitude);
-        this.latitude = latitude;
-        assertClassInvariants();
-    }
-
-    /**
-     *
-     * @methodtype query method
-     * (setter)
-     */
-
-    public void setLongitude(double longitude) {
-        assertIsValidInput(longitude);
-        checkLongitude(longitude);
-        this.longitude = longitude;
-        assertClassInvariants();
-    }
-
-    /**
-     *
-     * @methodtype query method
      * (getter)
      */
 
     public double getX() {
-        x = radius * (Math.sin((Math.toRadians(longitude))))
+        final double x = radius * (Math.sin((Math.toRadians(longitude))))
                 * (Math.cos(Math.toRadians(latitude)));
         assertIsValidInput(x);
         return x;
@@ -108,7 +99,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public double getY() {
-        y = radius * (Math.sin((Math.toRadians(longitude))))
+        final double y = radius * (Math.sin((Math.toRadians(longitude))))
                 * (Math.sin(Math.toRadians(latitude)));
         assertIsValidInput(y);
         return y;
@@ -121,7 +112,7 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public double getZ() {
-        z = radius * (Math.cos((Math.toRadians(longitude))));
+        final double z = radius * (Math.cos((Math.toRadians(longitude))));
         assertIsValidInput(z);
         return z;
     }
@@ -132,11 +123,12 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public SphericCoordinate(double latitude, double longitude, double radius) {
-        setLatitude(latitude);
-        setLongitude(longitude);
+        checkLatitude(latitude);
+        this.latitude = latitude;
+        checkLongitude(longitude);
+        this.longitude = longitude;
         assertIsValidRadius(radius);
         this.radius = radius;
-        assertClassInvariants();
     }
 
     /**
@@ -145,16 +137,26 @@ public class SphericCoordinate extends AbstractCoordinate {
      */
 
     public CartesianCoordinate toCarthesian(){
-        double x = getX();
-        double y = getY();
-        double z = getZ();
+        final double x = getX();
+        final double y = getY();
+        final double z = getZ();
 
-        return new CartesianCoordinate(x, y, z);
+        return CartesianCoordinate.getInstance(x, y, z);
     }
 
     protected void assertIsValidRadius(double radius){
         assertIsValidInput(radius);
         if(radius < 0)
             throw new IllegalArgumentException("Radius can't be negative");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

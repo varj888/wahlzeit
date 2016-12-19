@@ -17,7 +17,6 @@ public abstract class AbstractCoordinate implements Coordinate {
         public double getDistance(Coordinate c){
             assertIsValidCoordinate(c);
             double distance = 0;
-            assertClassInvariants();
             CartesianCoordinate c1 = toCarthesian();
             CartesianCoordinate c2 = c.toCarthesian();
 
@@ -49,9 +48,5 @@ public abstract class AbstractCoordinate implements Coordinate {
             assertIsValidInput(cc.getX());
             assertIsValidInput(cc.getY());
             assertIsValidInput(cc.getZ());
-        }
-
-        protected void assertClassInvariants(){
-            assertIsValidCoordinate(this);
         }
 }

@@ -1,4 +1,6 @@
 package org.wahlzeit.model;
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * v.1.2
@@ -8,9 +10,29 @@ package org.wahlzeit.model;
 
 public class CartesianCoordinate extends AbstractCoordinate {
 
-    private double x;
-    private double y;
-    private double z;
+    private final double x;
+    private final double y;
+    private final double z;
+
+    private static HashMap<Coordinate, Coordinate> instances = new HashMap<Coordinate, Coordinate>();
+
+    /**
+     * @methodtype query method
+     * (getter)
+     */
+
+    public static CartesianCoordinate getInstance(double x, double y, double z){
+        CartesianCoordinate coordinate = new CartesianCoordinate(x, y, z);
+        CartesianCoordinate coordinateInMap;
+        synchronized (instances){
+            coordinateInMap = (CartesianCoordinate)instances.get(coordinate);
+            if(coordinateInMap == null){
+                coordinateInMap = coordinate;
+                instances.put(coordinateInMap, coordinateInMap);
+            }
+        }
+        return coordinateInMap;
+    }
 
     /**
      * @methodtype query method
@@ -50,7 +72,6 @@ public class CartesianCoordinate extends AbstractCoordinate {
         this.x = x;
         this.y = y;
         this.z = z;
-        assertClassInvariants();
     }
 
     /**
@@ -59,6 +80,16 @@ public class CartesianCoordinate extends AbstractCoordinate {
      */
 
     public CartesianCoordinate toCarthesian(){
-        return this;
+        return getInstance(this.x, this.y, this.z);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
