@@ -1,8 +1,10 @@
 package org.wahlzeit.model;
 
-/**
- * Created on 12.11.16.
- */
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {"AbstractFactory", "ConcreteFactory"}
+)
+
 public class ArtPhotoFactory extends PhotoFactory {
 
     /**

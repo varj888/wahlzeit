@@ -1,9 +1,11 @@
 package org.wahlzeit.model;
 import java.io.Serializable;
 
-/**
- * Created on 12.11.16.
- */
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {"AbstractProduct", "ConcreteProduct"}
+)
+
 public class ArtPhoto extends Photo implements Serializable {
 
     private ArtPhotoManager artPhotoManager = this.getArtPhotoManager();

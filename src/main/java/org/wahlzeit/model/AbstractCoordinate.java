@@ -1,12 +1,10 @@
 package org.wahlzeit.model;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
+@PatternInstance(
+        patternName = "Template",
+        participants = {"AbstractProduct"}
+)
 
-/**
- * v.1.2
- *
- * Created on 27.11.16.
- */
 public abstract class AbstractCoordinate implements Coordinate {
 
         public boolean isEqual(Coordinate c){

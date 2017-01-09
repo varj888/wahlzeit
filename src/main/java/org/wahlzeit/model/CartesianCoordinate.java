@@ -2,11 +2,10 @@ package org.wahlzeit.model;
 import java.util.HashMap;
 import java.util.Objects;
 
-/**
- * v.1.2
- *
- * Created on 19.11.16.
- */
+@PatternInstance(
+        patternName = "Template",
+        participants = {"AbstractProduct", "ConcreteProduct"}
+)
 
 public class CartesianCoordinate extends AbstractCoordinate {
 
