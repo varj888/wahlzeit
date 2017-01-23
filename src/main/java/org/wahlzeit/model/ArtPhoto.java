@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class ArtPhoto extends Photo implements Serializable {
 
     private ArtPhotoManager artPhotoManager = this.getArtPhotoManager();
-    private ArtPhotoCategory artPhotoCategory = ArtPhotoCategory.NO_CATEGORY;
+    private Art art;
 
     /**
      *
@@ -43,9 +43,9 @@ public class ArtPhoto extends Photo implements Serializable {
      * @methodtype constructor
      */
 
-    public ArtPhoto(ArtPhotoCategory artPhotoCategory){
+    public ArtPhoto(Art art){
         super();
-        this.artPhotoCategory = artPhotoCategory;
+        this.art = art;
     }
 
     /**
@@ -54,8 +54,8 @@ public class ArtPhoto extends Photo implements Serializable {
      * (getter)
      */
 
-    public ArtPhotoCategory getArtPhotoCategory(){
-        return artPhotoCategory;
+    public Art getArt(){
+        return art;
     }
 
     /**
@@ -64,9 +64,9 @@ public class ArtPhoto extends Photo implements Serializable {
      * (setter)
      */
 
-    public void setArtPhotoCategory(ArtPhotoCategory setCategory){
-        assertIsValidArtPhotoCategory(setCategory);
-        this.artPhotoCategory = setCategory;
+    public void setArt(Art art){
+        assertIsValidArtPhotoCategory(art);
+        this.art = art;
     }
 
     /**
@@ -79,9 +79,14 @@ public class ArtPhoto extends Photo implements Serializable {
         return ArtPhotoManager.getInstance();
     }
 
-    protected void assertIsValidArtPhotoCategory(ArtPhotoCategory category){
-        if(category == null){
-            throw new IllegalArgumentException("ArtPhotoCategory can't be null");
+    /**
+     *
+     * @methodtype assertion method
+     */
+
+    protected void assertIsValidArtPhotoCategory(Art art){
+        if(art == null){
+            throw new IllegalArgumentException("Art can't be null");
         }
     }
 }
