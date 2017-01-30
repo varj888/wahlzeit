@@ -58,7 +58,7 @@ public class ArtManager extends ObjectManager {
      * @methodtype mutation method
      */
 
-    public synchronized void removeArtTypes(ArtType artType){
+    public synchronized void removeArtType(ArtType artType){
         if(artTypes.containsKey(artType)){
             artTypes.remove(artType);
         }
