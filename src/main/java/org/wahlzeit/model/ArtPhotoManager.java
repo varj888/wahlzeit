@@ -1,6 +1,7 @@
 package org.wahlzeit.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArtPhotoManager extends PhotoManager {
 
@@ -16,7 +17,7 @@ public class ArtPhotoManager extends PhotoManager {
         return instance;
     }
 
-    public ArrayList<ArtPhoto> artPhotos = new ArrayList<>();
+    public HashMap<ArtPhoto, ArtPhoto> artPhotos = new HashMap<>();
 
     /**
      *
@@ -25,7 +26,7 @@ public class ArtPhotoManager extends PhotoManager {
      */
 
     public void addArtPhoto(ArtPhoto artPhoto){
-        artPhotos.add(artPhoto);
+        artPhotos.put(artPhoto, artPhoto);
     }
 
     /**
@@ -34,7 +35,7 @@ public class ArtPhotoManager extends PhotoManager {
      */
 
     public void deleteArtPhoto(ArtPhoto artPhoto){
-        if(artPhotos.contains(artPhoto)){
+        if(artPhotos.containsKey(artPhoto)){
             artPhotos.remove(artPhoto);
         }
     }

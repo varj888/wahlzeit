@@ -12,6 +12,14 @@ public class ArtType {
         this.artManager = ArtManager.getInstance();
     }
 
+    public ArtCategory getArtCategory(){
+        return  artCategory;
+    }
+
+    public void setArtCategory(ArtCategory artCategory){
+        this.artCategory = artCategory;
+    }
+
     public enum ArtCategory implements EnumValue {
 
         RENAISSANCE(0),

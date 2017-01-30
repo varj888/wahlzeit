@@ -25,8 +25,8 @@ public class ArtPhoto extends Photo implements Serializable {
      * @methodtype constructor
      */
 
-    public ArtPhoto(Photo photo){
-        super(photo.getId());
+    public ArtPhoto(PhotoId photoId) {
+        super(photoId);
     }
 
     /**
@@ -34,17 +34,8 @@ public class ArtPhoto extends Photo implements Serializable {
      * @methodtype constructor
      */
 
-    public ArtPhoto(PhotoId id){
-        super(id);
-    }
-
-    /**
-     *
-     * @methodtype constructor
-     */
-
-    public ArtPhoto(Art art){
-        super();
+    public ArtPhoto(PhotoId photoId, Art art){
+        super(photoId);
         this.art = art;
     }
 

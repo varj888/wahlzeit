@@ -19,7 +19,7 @@ public class ArtPhotoFactory extends PhotoFactory {
      * @methodtype factory
      */
 
-    public ArtPhoto createArtPhoto(PhotoId id) {
-        return new ArtPhoto(id);
+    public ArtPhoto createArtPhoto(PhotoId id, Art art) {
+        return new ArtPhoto(id, art);
     }
 }

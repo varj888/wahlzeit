@@ -3,6 +3,7 @@ package org.wahlzeit.model;
 import org.wahlzeit.services.ObjectManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArtManager extends ObjectManager {
 
@@ -18,8 +19,8 @@ public class ArtManager extends ObjectManager {
         return instance;
     }
 
-    public ArrayList<Art> arts = new ArrayList<>();
-    public ArrayList<ArtType> artTypes = new ArrayList<>();
+    public HashMap<Art, Art> arts = new HashMap<>();
+    public HashMap<ArtType, ArtType> artTypes = new HashMap();
 
     /**
      *
@@ -27,8 +28,8 @@ public class ArtManager extends ObjectManager {
      * (setter)
      */
 
-    public void setArts(Art art){
-        arts.add(art);
+    public void addArt(Art art) {
+        arts.put(art, art);
     }
 
     /**
@@ -37,8 +38,8 @@ public class ArtManager extends ObjectManager {
      * (setter)
      */
 
-    public void setArtTypes(ArtType artType){
-        artTypes.add(artType);
+    public void addArtType(ArtType artType){
+        artTypes.put(artType, artType);
     }
 
     /**
@@ -46,8 +47,8 @@ public class ArtManager extends ObjectManager {
      * @methodtype mutation method
      */
 
-    public void removeArts(Art art){
-        if(arts.contains(art)){
+    public synchronized void removeArt(Art art){
+        if(arts.containsKey(art)){
             arts.remove(art);
         }
     }
@@ -57,9 +58,34 @@ public class ArtManager extends ObjectManager {
      * @methodtype mutation method
      */
 
-    public void removeArtTypes(ArtType artType){
-        if(artTypes.contains(artType)){
+    public synchronized void removeArtTypes(ArtType artType){
+        if(artTypes.containsKey(artType)){
             artTypes.remove(artType);
         }
+    }
+
+    public Art createArt(ArtType artType){
+        Art art = new Art(artType);
+        arts.put(art, art);
+        return art;
+    }
+
+    /**
+     *
+     * @methodtype query method
+     * (getter)
+     */
+
+    public ArtType getArtType(Art art){
+        return art.getArtType();
+    }
+
+    /**
+     *
+     * @methodtype mutation method
+     */
+
+    public void setArtType(Art art, ArtType artType){
+        art.setArtType(artType);
     }
 }

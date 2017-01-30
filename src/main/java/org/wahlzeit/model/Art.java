@@ -5,15 +5,14 @@ public class Art {
     private ArtManager artManager = this.getArtManager();
 
     private ArtType artType;
-    private ArtPhoto artPhoto;
+
+    /**
+     *
+     * @methodtype constructor
+     */
 
     public Art(ArtType artType){
         this.artType = artType;
-    }
-
-    public Art(ArtType artType, ArtPhoto artPhoto){
-        this.artType = artType;
-        this.artPhoto = artPhoto;
     }
 
     /**
@@ -24,5 +23,25 @@ public class Art {
 
     public ArtManager getArtManager(){
         return ArtManager.getInstance();
+    }
+
+    /**
+     *
+     * @methodtype query method
+     * (getter)
+     */
+
+    public ArtType getArtType(){
+        return artType;
+    }
+
+    /**
+     *
+     * @methodtype mutation method
+     * (setter)
+     */
+
+    public void setArtType(ArtType artType){
+        this.artType = artType;
     }
 }
